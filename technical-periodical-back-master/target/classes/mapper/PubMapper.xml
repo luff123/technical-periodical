@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luff.tp.mapper.PubMapper">
+    <select id="selectPeriodicalByUserId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select `periodical_id` from `pub` where `user_id` = #{userId};
+    </select>
+    <insert id="insert" parameterType="Pub">
+        insert into `pub` values (#{userId}, #{periodicalId});
+    </insert>
+    <delete id="delete" parameterType="Pub">
+        delete from `pub` where `user_id` = #{userId} and `periodical_id` = #{periodicalId};
+    </delete>
+    <select id="select" parameterType="Pub" resultType="Pub">
+        select * from `pub` where `user_id` = #{userId} and `periodical_id` = #{periodicalId};
+    </select>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luff.tp.mapper.StarMapper">
+    <select id="selectPaperByUserId" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select `paper_id` from `star` where `user_id` = #{userId};
+    </select>
+    <insert id="insert" parameterType="Star">
+        insert into `star` values (#{userId}, #{paperId});
+    </insert>
+    <delete id="delete" parameterType="Star">
+        delete from `star` where `user_id` = #{userId} and `paper_id` = #{paperId};
+    </delete>
+    <select id="select" parameterType="Star" resultType="Star">
+        select * from `star` where `user_id` = #{userId} and `paper_id` = #{paperId};
+    </select>
+</mapper>

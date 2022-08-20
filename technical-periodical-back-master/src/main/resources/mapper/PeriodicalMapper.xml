@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luff.tp.mapper.PeriodicalMapper">
+    <select id="selectNameById" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select `name` from `periodical` where `id` = #{id};
+    </select>
+    <select id="selectById" resultType="Periodical" parameterType="java.lang.Integer">
+        select * from `periodical` where `id` = #{id};
+    </select>
+    <select id="selectByKeyDateClassify" resultType="Periodical">
+        select * from `periodical` where 1=1
+        <if test="keyword != null and keyword != ''">
+            and `name` like CONCAT('%', #{keyword}, '%') or `author_id` in (select `id` from `user` where `name` like CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="startDate != 'none'">
+            and `date` &gt;= #{startDate}
+        </if>
+        <if test="endDate != 'none'">
+            and `date` &lt;= #{endDate}
+        </if>
+        <if test="classify != '全部'">
+            and `classify` = #{classify}
+        </if>
+        ;
+    </select>
+</mapper>

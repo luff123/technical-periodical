@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luff.tp.mapper.PaperMapper">
+    <select id="selectOrderByDate" parameterType="java.lang.Integer" resultType="Paper">
+        select * from `paper` order by `date` desc limit 0, #{limit};
+    </select>
+    <select id="selectById" parameterType="java.lang.Integer" resultType="Paper">
+        select * from `paper` where `id` = #{id};
+    </select>
+    <select id="selectByPeriodicalOrderByDate" parameterType="java.lang.Integer" resultType="Paper">
+        select * from `paper` where `periodical_id` = #{periodicalId} order by `date` desc;
+    </select>
+    <select id="selectByPeriodicalOrderByDateTop3" parameterType="java.lang.Integer" resultType="Paper">
+        select * from `paper` where `periodical_id` = #{periodicalId} order by `date` desc limit 0, 3;
+    </select>
+    <select id="selectByKeyDateClassify" resultType="Paper">
+        select * from `paper` where 1=1
+        <if test="keyword != null and keyword != ''">
+            and `title` like CONCAT('%', #{keyword}, '%') or `author_id` in (select `id` from `user` where `name` like CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="startDate != 'none'">
+            and `date` >= #{startDate}
+        </if>
+        <if test="endDate != 'none'">
+            and `date` &lt;= #{endDate}
+        </if>
+        <if test="classify != '全部'">
+            and `classify` = #{classify}
+        </if>
+        ;
+    </select>
+</mapper>
